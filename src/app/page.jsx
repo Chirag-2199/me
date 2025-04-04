@@ -74,7 +74,7 @@ export default function Home() {
                 Chirag Kumar
               </motion.h1>
               <motion.p className="text-xl text-slate-600 mb-6">
-                Senior Full Stack Engineer
+                Full Stack Engineer
               </motion.p>
 
               <div className="flex justify-center gap-4 mb-12">
