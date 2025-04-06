@@ -14,29 +14,47 @@ const LoaderEffect = () => (
   </Canvas>
 );
 
-const TechSphere = () => (
-  <Canvas camera={{ position: [0, 0, 5] }} className="w-full h-64">
-    <ambientLight intensity={0.5} />
-    <pointLight position={[10, 10, 10]} />
-    <mesh>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial
-        color="#0ea5e9"
-        roughness={0.2}
-        metalness={0.8}
-        transparent
-        opacity={0.8}
-      />
-    </mesh>
-    <OrbitControls enableZoom={false} autoRotate />
-  </Canvas>
-);
-
 export default function Home() {
+  const [sending, setSending] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref });
   const x = useTransform(scrollYProgress, [0, 1], ['0%', '-50%']);
+
+  const sendEmail = async () => {
+    setSending(true);
+    const res = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        to: 'chiragkr6699@gmail.com',
+        subject: 'Someone Liked your Portfolio!',
+        text: 'Hello Chirag, someone liked your portfolio! Check it out at https://chiragkumar.dev',
+      }),
+    });
+
+    const data = await res.json();
+    console.log(data.success ? 'Email sent!' : `Failed: ${data.error}`);
+    setSending(false);
+  };
+
+  const TechSphere = () => (
+    <Canvas camera={{ position: [0, 0, 5] }} className="w-full h-64">
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} />
+      <mesh>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial
+          color="#0ea5e9"
+          roughness={0.2}
+          metalness={0.8}
+          transparent
+          opacity={0.8}
+        />
+      </mesh>
+      <OrbitControls enableZoom={false} autoRotate />
+    </Canvas>
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 3500);
@@ -299,6 +317,42 @@ export default function Home() {
                   </motion.div>
                 ))}
               </div>
+
+              {/* Styled Email Button */}
+              <motion.div
+                className="flex justify-center mt-16"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <button
+                  onClick={sendEmail}
+                  disabled={sending}
+                  className="relative group px-8 py-4 rounded-full overflow-hidden transition-all"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/30 to-blue-500/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0.5 bg-slate-900 rounded-full" />
+                  <div className="relative flex items-center gap-3">
+                    <motion.span
+                      className="bg-gradient-to-br from-cyan-400 to-blue-500 bg-clip-text text-transparent font-bold text-lg"
+                      animate={sending ? { opacity: 0.5 } : {}}
+                    >
+                      {sending ? (
+                        'Sending Appreciation...'
+                      ) : (
+                        <>
+                          <FiStar className="inline-block mr-2" />
+                          Love My Work? Send Appreciation
+                          <FiStar className="inline-block ml-2" />
+                        </>
+                      )}
+                    </motion.span>
+                  </div>
+                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400 text-sm font-light whitespace-nowrap">
+                    Let Chirag know you liked this portfolio!
+                  </div>
+                </button>
+              </motion.div>
             </section>
           </motion.main>
         )}
