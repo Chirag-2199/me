@@ -7,14 +7,57 @@ import { OrbitControls, Stars } from '@react-three/drei';
 
 const LoaderEffect = () => (
   <Canvas className="absolute inset-0">
-    <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
     <ambientLight intensity={0.5} />
-    <pointLight position={[10, 10, 10]} intensity={1} />
+    <pointLight position={[10, 10, 10]} intensity={1.5} />
+    <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
     <OrbitControls autoRotate enableZoom={false} />
   </Canvas>
 );
 
+const TextReveal = ({ children }) => {
+  const letters = Array.from(children);
+
+  return (
+    <div className="flex">
+      {letters.map((letter, i) => (
+        <motion.span
+          key={i}
+          initial={{
+            opacity: 0,
+            y: 100,
+            rotate: 40,
+            scale: 3,
+            textShadow: '0 0 32px rgba(14,165,233,0.8)'
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            rotate: 0,
+            scale: 1,
+            textShadow: '0 0 16px rgba(14,165,233,0.2)',
+            transition: {
+              type: 'spring',
+              stiffness: 150,
+              damping: 20,
+              delay: i * 0.08
+            }
+          }}
+          exit={{
+            opacity: 0,
+            scale: 0.5,
+            transition: { duration: 0.2 }
+          }}
+          className="inline-block"
+        >
+          {letter === ' ' ? '\u00A0' : letter}
+        </motion.span>
+      ))}
+    </div>
+  );
+};
+
 export default function Home() {
+  const [count, setCount] = useState(0);
   const [sending, setSending] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const ref = useRef(null);
@@ -28,8 +71,9 @@ export default function Home() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         to: 'chiragkr6699@gmail.com',
+        cc: 'chiragkumar2199@gmail.com',
         subject: 'Someone Liked your Portfolio!',
-        text: 'Hello Chirag, someone liked your portfolio! Check it out at https://chiragkumar.dev',
+        text: 'Hello Chirag, someone liked your portfolio! Check it out at https://chiragkumar.site/',
       }),
     });
 
@@ -37,6 +81,7 @@ export default function Home() {
     console.log(data.success ? 'Email sent!' : `Failed: ${data.error}`);
     setSending(false);
   };
+
 
   const TechSphere = () => (
     <Canvas camera={{ position: [0, 0, 5] }} className="w-full h-64">
@@ -69,16 +114,52 @@ export default function Home() {
             key="loader"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="h-screen flex items-center justify-center bg-slate-900"
+            className="h-screen flex flex-col items-center justify-center bg-slate-900 space-y-8"
           >
             <LoaderEffect />
             <motion.div
-              className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent relative z-10"
               initial={{ scale: 0 }}
-              animate={{ scale: [0, 1.2, 1] }}
-              transition={{ duration: 1.5, times: [0, 0.8, 1] }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+              className="w-64 h-64 relative"
             >
-              CHIRAG KUMAR
+              <Canvas camera={{ position: [0, 0, 5] }}>
+                <ambientLight intensity={0.5} />
+                <pointLight position={[10, 10, 10]} />
+                <mesh rotation={[Math.PI / 4, Math.PI / 4, 0]}>
+                  <torusGeometry args={[2, 0.5, 32, 100]} />
+                  <meshStandardMaterial
+                    color="#0ea5e9"
+                    roughness={0.1}
+                    metalness={0.9}
+                    transparent
+                    opacity={0.8}
+                  />
+                </mesh>
+                <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={4} />
+              </Canvas>
+            </motion.div>
+
+            <motion.div
+              className="text-6xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
+              initial={{ scale: 0.5 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <TextReveal>CHIRAG KUMAR</TextReveal>
+            </motion.div>
+
+            <motion.div
+              className="absolute bottom-32 text-cyan-300 text-lg"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 1.2 } }}
+            >
+              <motion.div
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+              >
+                Loading Portfolio...
+              </motion.div>
             </motion.div>
           </motion.div>
         ) : (

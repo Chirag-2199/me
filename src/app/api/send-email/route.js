@@ -5,10 +5,11 @@ const resend = new Resend('re_7KS9ydpY_Dj4ifFEVGrCgPJWvKqiT2X2R');
 
 export async function POST(req) {
     try {
-        const { to, subject, text } = await req.json();
+        const { to, subject, text, cc } = await req.json();
 
         const data = await resend.emails.send({
-            from: 'onboarding@resend.dev', // you can change this once your domain is verified
+            from: 'chirag@chiragkumar.site',
+            cc,
             to,
             subject,
             text,
