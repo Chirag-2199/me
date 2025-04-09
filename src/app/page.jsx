@@ -3,14 +3,23 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react';
 import { FiGithub, FiLinkedin, FiMail, FiArrowUpRight, FiCode, FiServer, FiCloud, FiCpu, FiBriefcase, FiStar, FiDatabase } from 'react-icons/fi';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stars } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 
 const LoaderEffect = () => (
   <Canvas className="absolute inset-0">
     <ambientLight intensity={0.5} />
     <pointLight position={[10, 10, 10]} intensity={1.5} />
-    <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-    <OrbitControls autoRotate enableZoom={false} />
+    <mesh>
+      <torusKnotGeometry args={[1, 0.4, 128, 32]} />
+      <meshStandardMaterial
+        color="#d946ef"
+        roughness={0.3}
+        metalness={0.8}
+        transparent
+        opacity={0.9}
+      />
+    </mesh>
+    <OrbitControls autoRotate enableZoom={false} autoRotateSpeed={2} />
   </Canvas>
 );
 
@@ -27,14 +36,14 @@ const TextReveal = ({ children }) => {
             y: 100,
             rotate: 40,
             scale: 3,
-            textShadow: '0 0 32px rgba(14,165,233,0.8)'
+            textShadow: '0 0 32px rgba(217,70,239,0.8)'
           }}
           animate={{
             opacity: 1,
             y: 0,
             rotate: 0,
             scale: 1,
-            textShadow: '0 0 16px rgba(14,165,233,0.2)',
+            textShadow: '0 0 16px rgba(217,70,239,0.2)',
             transition: {
               type: 'spring',
               stiffness: 150,
@@ -82,7 +91,6 @@ export default function Home() {
     setSending(false);
   };
 
-
   const TechSphere = () => (
     <Canvas camera={{ position: [0, 0, 5] }} className="w-full h-64">
       <ambientLight intensity={0.5} />
@@ -90,7 +98,7 @@ export default function Home() {
       <mesh>
         <sphereGeometry args={[1, 32, 32]} />
         <meshStandardMaterial
-          color="#0ea5e9"
+          color="#d946ef"
           roughness={0.2}
           metalness={0.8}
           transparent
@@ -107,41 +115,41 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-teal-900 to-orange-900">
       <AnimatePresence>
         {isLoading ? (
           <motion.div
             key="loader"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="h-screen flex flex-col items-center justify-center bg-slate-900 space-y-8"
+            className="h-screen flex flex-col items-center justify-center bg-gradient-to-br from-teal-900 to-orange-900 space-y-8"
           >
             <LoaderEffect />
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 15 }}
               className="w-64 h-64 relative"
             >
               <Canvas camera={{ position: [0, 0, 5] }}>
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} />
                 <mesh rotation={[Math.PI / 4, Math.PI / 4, 0]}>
-                  <torusGeometry args={[2, 0.5, 32, 100]} />
+                  <icosahedronGeometry args={[2, 0]} />
                   <meshStandardMaterial
-                    color="#0ea5e9"
+                    color="#14b8a6"
                     roughness={0.1}
                     metalness={0.9}
                     transparent
                     opacity={0.8}
                   />
                 </mesh>
-                <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={4} />
+                <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={3} />
               </Canvas>
             </motion.div>
 
             <motion.div
-              className="text-6xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
+              className="text-6xl font-bold bg-gradient-to-r from-teal-400 to-orange-500 bg-clip-text text-transparent"
               initial={{ scale: 0.5 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.5 }}
@@ -150,7 +158,7 @@ export default function Home() {
             </motion.div>
 
             <motion.div
-              className="absolute bottom-32 text-cyan-300 text-lg"
+              className="absolute bottom-32 text-teal-300 text-lg"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 1.2 } }}
             >
@@ -173,7 +181,7 @@ export default function Home() {
               <div className="absolute inset-0 overflow-hidden" ref={ref}>
                 <motion.div style={{ x }} className="flex gap-4">
                   {[...Array(10)].map((_, i) => (
-                    <div key={i} className="w-screen h-screen bg-gradient-to-br from-cyan-900/20 to-blue-900/20" />
+                    <div key={i} className="w-screen h-screen bg-gradient-to-br from-teal-900/20 to-orange-900/20" />
                   ))}
                 </motion.div>
               </div>
@@ -182,9 +190,9 @@ export default function Home() {
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="mb-8 inline-block rounded-full p-1 bg-gradient-to-br from-cyan-500 to-blue-600"
+                  className="mb-8 inline-block rounded-full p-1 bg-gradient-to-br from-teal-500 to-orange-600"
                 >
-                  <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-slate-900">
+                  <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-orange-900">
                     <TechSphere />
                   </div>
                 </motion.div>
@@ -192,19 +200,19 @@ export default function Home() {
                 <motion.h1
                   initial={{ y: 50, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  className="text-6xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
+                  className="text-6xl font-bold mb-4 bg-gradient-to-r from-teal-400 to-orange-500 bg-clip-text text-transparent"
                 >
                   Chirag Kumar
                 </motion.h1>
 
                 <motion.p
-                  className="text-xl text-cyan-300 mb-6 flex items-center justify-center gap-2"
+                  className="text-xl text-teal-300 mb-6 flex items-center justify-center gap-2"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                 >
-                  <FiStar className="text-amber-400" />
+                  <FiStar className="text-yellow-400" />
                   Full Stack Engineer
-                  <FiStar className="text-amber-400" />
+                  <FiStar className="text-yellow-400" />
                 </motion.p>
 
                 <motion.div
@@ -235,10 +243,10 @@ export default function Home() {
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={{ y: -5 }}
-                      className="p-4 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors relative group"
+                      className="p-4 rounded-full bg-teal-800 hover:bg-teal-700 transition-colors relative group"
                     >
-                      <Icon className="w-6 h-6 text-cyan-400" />
-                      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400 text-sm font-light">
+                      <Icon className="w-6 h-6 text-orange-400" />
+                      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-orange-400 text-sm font-light">
                         {label}
                       </div>
                     </motion.a>
