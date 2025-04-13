@@ -10,7 +10,7 @@ const LoaderParticles = (props) => {
   const ref = useRef();
   // Correct the positions array initialization
   const [sphere] = useState(() =>
-    random.inSphere(new Float32Array(5000 * 3), { radius: 2.5 }) // 5000 points × 3 coordinates (x,y,z)
+    random.inSphere(new Float32Array(5000 * 3), { radius: 2.5 })
   );
 
   useFrame((state, delta) => {
