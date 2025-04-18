@@ -456,13 +456,13 @@ export default function Home() {
                   <div>
                     <input
                       type="email"
-                      placeholder="Your email address"
+                      placeholder="example@gmail.com"
                       className="w-full p-4 bg-slate-800/50 border border-indigo-500/30 rounded-lg focus:outline-none focus:border-cyan-400/50 text-indigo-100"
                     />
                   </div>
                   <div>
                     <textarea
-                      placeholder="Your message"
+                      placeholder="Loved my work? Let me know!"
                       rows="5"
                       className="w-full p-4 bg-slate-800/50 border border-indigo-500/30 rounded-lg focus:outline-none focus:border-cyan-400/50 text-indigo-100"
                     />
