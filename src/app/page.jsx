@@ -186,6 +186,7 @@ export default function Home() {
                     { icon: FiGithub, link: 'https://github.com/Chirag-2199', label: 'GitHub' },
                     { icon: FiLinkedin, link: 'https://linkedin.com/in/chirgkr', label: 'LinkedIn' },
                     { icon: FiMail, link: 'mailto:chiragkumar2199@gmail.com', label: 'Email' },
+                    { icon: FiFileText, link: '/ChiragKumar-Resume.pdf', label: 'Resume' }, // New resume link
                   ].map(({ icon: Icon, link, label }, i) => (
                     <motion.a
                       key={i}
