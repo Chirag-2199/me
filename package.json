@@ -14,8 +14,9 @@
     "@heroicons/react": "^2.2.0",
     "@react-three/drei": "^10.0.6",
     "@react-three/fiber": "^9.1.2",
+    "@react-three/postprocessing": "^3.0.4",
     "autoprefixer": "^10.4.21",
-    "framer-motion": "^12.6.5",
+    "framer-motion": "^12.7.4",
     "maath": "^0.10.8",
     "next": "15.2.4",
     "nodemailer": "^6.10.0",
@@ -26,7 +27,8 @@
     "react-use": "^17.6.0",
     "resend": "^4.2.0",
     "simplex-noise": "^4.0.3",
-    "three": "^0.175.0"
+    "three": "^0.175.0",
+    "valtio": "^2.1.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
