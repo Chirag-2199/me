@@ -87,6 +87,54 @@ const ProjectCard = ({ title, description, technologies, link }) => (
   </motion.a>
 );
 
+const CustomScrollBar = () => {
+  const { scrollYProgress } = useScroll();
+  const scaleY = useTransform(scrollYProgress, [0, 1], [0.1, 1]); // Smoother initial appearance
+  const opacity = useTransform(scrollYProgress, [0, 0.1, 1], [0, 0.8, 1]); // Fade-in effect
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    ["rgba(99, 102, 241, 0.3)", "rgba(124, 58, 237, 0.6)", "rgba(139, 92, 246, 0.9)"]
+  );
+
+  return (
+    <motion.div
+      className="fixed top-0 right-0 w-3 h-full z-50 overflow-hidden pointer-events-none"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-slate-800/20 backdrop-blur-lg"
+      />
+
+      <motion.div
+        className="w-full h-full rounded-full origin-top"
+        style={{
+          scaleY,
+          opacity,
+          backgroundColor,
+          boxShadow: "0 0 12px rgba(139, 92, 246, 0.5)",
+        }}
+        whileHover={{
+          scaleX: 1.2,
+          backgroundColor: "rgba(167, 139, 250, 0.9)",
+          transition: { duration: 0.2 }
+        }}
+      />
+
+      {/* Micro-interaction indicator */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-1 bg-white/80 rounded-full"
+        style={{
+          scaleX: scrollYProgress,
+          originX: 0,
+        }}
+      />
+    </motion.div>
+  );
+};
+
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [sending, setSending] = useState(false);
@@ -101,6 +149,16 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-950">
+      <style jsx global>{`
+        ::-webkit-scrollbar {
+          display: none;
+        }
+        body {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
+
       <AnimatePresence>
         {isLoading ? (
           <motion.div
@@ -135,6 +193,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             className="container mx-auto px-4 py-12 relative overflow-hidden font-sans"
           >
+            <CustomScrollBar />
             {/* Hero Section */}
             <section className="min-h-screen flex items-center justify-center relative">
               <div className="absolute inset-0 overflow-hidden" ref={ref}>
