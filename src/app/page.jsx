@@ -6,6 +6,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, OrbitControls } from '@react-three/drei';
 import * as random from 'maath/random/dist/maath-random.esm';
 import ContactMe from './components/ContactMe';
+import Testimonials from './components/Testimonials';
 
 
 const LoaderParticles = (props) => {
@@ -392,35 +393,7 @@ export default function Home() {
 
             {/* Testimonials Section */}
             <section className="my-48">
-              <h2 className="text-4xl font-bold mb-16 text-center">
-                <span className="bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
-                  Client Voices
-                </span>
-                <div className="mt-4 h-1 bg-gradient-to-r from-indigo-500 to-cyan-500 w-48 mx-auto" />
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                {[
-                  {
-                    text: "Chirag transformed our vision into a digital masterpiece. His attention to detail and technical prowess are unmatched.",
-                    author: "Karan Chorpa, CTO PrepWithMe"
-                  },
-                  {
-                    text: "The system architecture he designed reduced our operational costs by 40%. Truly exceptional work.",
-                    author: "Rishabh Shukla, CEO RevQ India"
-                  }
-                ].map((testimonial, index) => (
-                  <motion.div
-                    key={index}
-                    whileHover={{ scale: 1.02 }}
-                    className="p-8 bg-slate-800/50 rounded-3xl border border-indigo-500/20 backdrop-blur-lg"
-                  >
-                    <FiFileText className="text-cyan-400 w-8 h-8 mb-4" />
-                    <p className="text-indigo-200 mb-4">{testimonial.text}</p>
-                    <p className="text-indigo-400 font-medium">{testimonial.author}</p>
-                  </motion.div>
-                ))}
-              </div>
+              <Testimonials />
             </section>
 
             {/* Assignments Section */}
