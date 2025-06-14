@@ -321,6 +321,12 @@ export default function Home() {
                 <div className="absolute left-1/2 w-1 h-full bg-gradient-to-b from-indigo-500/30 to-transparent -translate-x-1/2" />
 
                 {[
+                   {
+                    year: '2025-Present',
+                    role: 'Software Engineer',
+                    company: 'Sterling INC',
+                    description: 'Sterling Inc Leading the way in real estate development, creating innovative spaces that redefine urban living and business environments'
+                  },
                   {
                     year: '2024-Present',
                     role: 'Software Engineer',
