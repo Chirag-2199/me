@@ -322,25 +322,25 @@ export default function Home() {
 
                 {[
                    {
-                    year: '2025-Present',
+                    year: 'March 2025-Present',
                     role: 'Software Engineer',
                     company: 'Sterling INC',
                     description: 'Sterling Inc Leading the way in real estate development, creating innovative spaces that redefine urban living and business environments'
                   },
                   {
-                    year: '2024-Present',
+                    year: 'Sep 2024-March 2025',
                     role: 'Software Engineer',
                     company: 'Cactus Communications',
                     description: 'Cactus Communications is a global science communication and technology company that helps researchers.'
                   },
                   {
-                    year: '2024-2025',
+                    year: 'December 2024- March 2025',
                     role: 'Engineering Advisor',
                     company: 'RevQ',
                     description: 'RevQ is a SaaS platform that helps brands optimize sales and marketing on quick commerce platforms through real-time data insights.'
                   },
                   {
-                    year: '2024-2024',
+                    year: 'March 2024-Sep 2024',
                     role: 'Full Stack Developer Intern',
                     company: 'VerveBridge',
                     description: '​VerveBridge is an Indian EdTech platform offering remote internships, interactive courses, and software services to enhance professional development and connect learners with career opportunities.'
