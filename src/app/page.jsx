@@ -333,7 +333,7 @@ const About = () => {
             className="space-y-6"
           >
             {[
-              { label: 'Years Experience', value: '1+' },
+              { label: 'Years Experience', value: '2+' },
               { label: 'Projects Completed', value: '20+' },
               { label: 'Technologies Mastered', value: '15+' },
               { label: 'Client Satisfaction', value: '100%' }
